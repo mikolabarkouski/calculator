@@ -17,7 +17,7 @@ func TestCalculatePacksNeeded(t *testing.T) {
 		{
 			orderQuantity: 4,
 			packSizes:     []int{5, 10},
-			expected:      nil, // Impossible to fulfill order
+			expected:      nil,
 			expectError:   true,
 		},
 		{
