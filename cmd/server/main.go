@@ -17,10 +17,8 @@ func main() {
 	log.Printf("PACKAGES DEFAULT:%v", cfg.PackagesDefault)
 	repository := repo.NewRepository(cfg.PackagesDefault)
 
-	// Initialize application layer
 	application := app.NewApp(repository)
 
-	// Initialize API handlers
 	handler := api.NewHandler(application)
 
 	log.Printf("Starting server on :%s\n", cfg.Port)

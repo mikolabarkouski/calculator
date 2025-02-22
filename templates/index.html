@@ -45,6 +45,21 @@
             padding: 8px;
             text-align: center;
         }
+        .full-width-btn {
+            width: 100%;
+            background-color: #ee930a; 
+            color: white; 
+            border: none; 
+            padding: 10px 0; 
+            font-size: 26px; 
+            cursor: pointer; 
+            border-radius: 5px; 
+            transition: background-color 0.3s ease; 
+        }
+
+        .full-width-btn:hover {
+            background-color: #804b0e;
+        }
     </style>
 </head>
 <body>
@@ -73,8 +88,8 @@
     </div>
 
     <!-- Блок 3: Calculate -->
-    <div class="container">
-        <button onclick="calculate()">Calculate</button>
+    <div class="container" style="border: none;">
+        <button class="full-width-btn" onclick="calculate()">Calculate</button>
     </div>
 
     <!-- Блок 4: Results -->
@@ -88,7 +103,6 @@
                 </tr>
             </thead>
             <tbody id="results-table">
-                <!-- Результаты будут отображаться здесь -->
             </tbody>
         </table>
     </div>
@@ -98,13 +112,13 @@
         fetch('/package', {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'text/plain', // Устанавливаем тип данных как текст
+                'Content-Type': 'text/plain', 
             },
-            body: packageId // Отправляем только строку с ID
+            body: packageId 
         })
         .then(response => {
             if (response.ok) {
-                // Удаление элемента из DOM
+                
                 document.getElementById(`package-${packageId}`).remove();
             } else {
                 alert("Error deleting package");
@@ -120,22 +134,20 @@
     let value = input.value;
     if (!value) return;
 
-        // Отправляем POST запрос с числом в теле запроса
         fetch('/package', {
             method: 'POST',
             headers: {
-                'Content-Type': 'text/plain', // Устанавливаем заголовок как текст
+                'Content-Type': 'text/plain', 
             },
-            body: value // Отправляем само число
+            body: value 
         })
         .then(response => {
             if (response.ok) {
-                // Добавляем пакет в список после успешного запроса
                 let div = document.createElement("div");
                 div.innerHTML = `<input type="number" value="${value}" disabled> <button onclick="removePackage(this)">❌</button>`;
                 
                 document.getElementById("package-list").appendChild(div);
-                input.value = ""; // Очистить поле ввода
+                input.value = ""; 
             } else {
                 alert("Error adding package");
             }
@@ -146,25 +158,16 @@
     }
 
     function calculate() {
-    // Получаем значение из инпута для размера заказа
     let orderSize = document.getElementById("orderSize").value;
 
-    // Получаем все значения пакетов из элементов списка
-    let packageSizes = [];
-    let packageList = document.getElementById("package-list");
-    packageList.querySelectorAll("input").forEach(input => {
-        packageSizes.push(input.value);
-    });
 
 
-    // Отправляем запрос на сервер с помощью fetch
     fetch('/calculate', {
         method: 'POST',
-        body: orderSize // Отправляем данные как строку JSON
+        body: orderSize 
     })
-    .then(response => response.json()) // Ожидаем JSON в ответе
+    .then(response => response.json()) 
     .then(result => {
-        // Обновляем результаты на странице
         updateResults(result);
     })
     .catch(error => {
@@ -173,9 +176,8 @@
 }
     function updateResults(results) {
         let resultsTable = document.getElementById("results-table");
-        resultsTable.innerHTML = ""; // Очистить старые результаты
+        resultsTable.innerHTML = ""; 
 
-        // Пройдем по объекту results и отобразим его в таблице
         for (let packageSize in results) {
             if (results.hasOwnProperty(packageSize)) {
                 let row = document.createElement("tr");
