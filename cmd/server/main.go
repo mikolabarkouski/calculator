@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/joho/godotenv"
 	"github.com/mikolabarkouski/calculator/config"
 	"github.com/mikolabarkouski/calculator/internal/api"
 	"github.com/mikolabarkouski/calculator/internal/app"
@@ -12,6 +13,11 @@ import (
 )
 
 func main() {
+	envLoadErr := godotenv.Load()
+	if envLoadErr != nil {
+		log.Panic("env load err")
+	}
+
 	cfg := config.LoadConfig()
 
 	log.Printf("PACKAGES DEFAULT:%v", cfg.PackagesDefault)
