@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 )
@@ -26,7 +27,7 @@ func (h *Handler) addPackage(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) deletePackage(w http.ResponseWriter, r *http.Request) {
-	var id string
+	var id int
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, "Failed to read request body", http.StatusBadRequest)
@@ -40,12 +41,12 @@ func (h *Handler) deletePackage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	h.app.DeletePackage(id)
+	h.app.DeletePackage(fmt.Sprint(id))
 	w.WriteHeader(http.StatusOK)
 }
 
 func (h *Handler) getPackages(w http.ResponseWriter, r *http.Request) {
-	packages := h.app.GetPackages()
+	packages := h.app.GetPackagesMap()
 	responseBody, err := json.Marshal(packages)
 	if err != nil {
 		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
@@ -55,4 +56,5 @@ func (h *Handler) getPackages(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(responseBody)
+
 }

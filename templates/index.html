@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .container {
+            width: 400px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .packages, .order, .results {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .results {
+            border-bottom: none;
+        }
+        input {
+            padding: 5px;
+            width: 100px;
+        }
+        button {
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Блок 1: Packages -->
+    <div class="container packages">
+        <h3>Packages</h3>
+        <div id="package-list">
+            {{ range $key, $value := . }}
+            <div id="package-{{$key}}">
+                <input type="number" value="{{$value}}" id="package{{$key}}" disabled>
+                <button onclick="removePackage('{{$key}}')">❌</button>
+            </div>
+            {{ end }}
+        </div>
+        <div id="new-package">
+            <input type="number" id="packageSizeInput" placeholder="Enter size">
+            <button onclick="addPackage()">✔️</button>
+        </div>
+    </div>
+
+    <!-- Блок 2: Order -->
+    <div class="container order">
+        <h3>Order</h3>
+        <input type="number" id="orderSize" placeholder="Enter order size">
+    </div>
+
+    <!-- Блок 3: Calculate -->
+    <div class="container">
+        <button onclick="calculate()">Calculate</button>
+    </div>
+
+    <!-- Блок 4: Results -->
+    <div class="container results">
+        <h3>Results</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Package Size</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody id="results-table">
+                <!-- Результаты будут отображаться здесь -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function removePackage(packageId) {
+        fetch('/package', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'text/plain', // Устанавливаем тип данных как текст
+            },
+            body: packageId // Отправляем только строку с ID
+        })
+        .then(response => {
+            if (response.ok) {
+                // Удаление элемента из DOM
+                document.getElementById(`package-${packageId}`).remove();
+            } else {
+                alert("Error deleting package");
+            }
+        })
+        .catch(error => {
+            alert("Error: " + error);
+        });
+    }
+
+    function addPackage() {
+    let input = document.getElementById("packageSizeInput");
+    let value = input.value;
+    if (!value) return;
+
+        // Отправляем POST запрос с числом в теле запроса
+        fetch('/package', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain', // Устанавливаем заголовок как текст
+            },
+            body: value // Отправляем само число
+        })
+        .then(response => {
+            if (response.ok) {
+                // Добавляем пакет в список после успешного запроса
+                let div = document.createElement("div");
+                div.innerHTML = `<input type="number" value="${value}" disabled> <button onclick="removePackage(this)">❌</button>`;
+                
+                document.getElementById("package-list").appendChild(div);
+                input.value = ""; // Очистить поле ввода
+            } else {
+                alert("Error adding package");
+            }
+        })
+        .catch(error => {
+            alert("Error: " + error);
+        });
+    }
+
+    function calculate() {
+    // Получаем значение из инпута для размера заказа
+    let orderSize = document.getElementById("orderSize").value;
+
+    // Получаем все значения пакетов из элементов списка
+    let packageSizes = [];
+    let packageList = document.getElementById("package-list");
+    packageList.querySelectorAll("input").forEach(input => {
+        packageSizes.push(input.value);
+    });
+
+
+    // Отправляем запрос на сервер с помощью fetch
+    fetch('/calculate', {
+        method: 'POST',
+        body: orderSize // Отправляем данные как строку JSON
+    })
+    .then(response => response.json()) // Ожидаем JSON в ответе
+    .then(result => {
+        // Обновляем результаты на странице
+        updateResults(result);
+    })
+    .catch(error => {
+        alert("Error: " + error);
+    });
+}
+    function updateResults(results) {
+        let resultsTable = document.getElementById("results-table");
+        resultsTable.innerHTML = ""; // Очистить старые результаты
+
+        // Пройдем по объекту results и отобразим его в таблице
+        for (let packageSize in results) {
+            if (results.hasOwnProperty(packageSize)) {
+                let row = document.createElement("tr");
+                row.innerHTML = `<td>${packageSize}</td><td>${results[packageSize]}</td>`;
+                resultsTable.appendChild(row);
+            }
+        }
+    }
+
+
+    </script>
+
+</body>
+</html>

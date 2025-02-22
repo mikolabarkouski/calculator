@@ -16,6 +16,10 @@ func (a *App) GetPackages() []int {
 	packages := a.repo.GetPackages()
 	return packages
 }
+func (a *App) GetPackagesMap() map[string]int {
+	packagesMap := a.repo.GetPackagesMap()
+	return packagesMap
+}
 
 func (a *App) AddPackage(packageSize int) {
 	a.repo.AddPackage(packageSize)

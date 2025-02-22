@@ -31,6 +31,10 @@ func (r *Repository) GetPackages() []int {
 	sort.Ints(values)
 	return values
 }
+func (r *Repository) GetPackagesMap() map[string]int {
+
+	return r.packages
+}
 
 func (r *Repository) DeletePackageById(id string) {
 	delete(r.packages, id)
