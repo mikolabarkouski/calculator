@@ -8,9 +8,9 @@ import (
 
 // Config holds application configuration
 type Config struct {
-	Port        string `env:"PORT" envDefault:"8080"`
-	DatabaseURL string `env:"DATABASE_URL,required"`
-	LogLevel    string `env:"LOG_LEVEL" envDefault:"info"`
+	Port            string `env:"PORT" envDefault:"8080"`
+	LogLevel        string `env:"LOG_LEVEL" envDefault:"info"`
+	PackagesDefault []int  `env:"PACKAGES"`
 }
 
 // LoadConfig parses environment variables

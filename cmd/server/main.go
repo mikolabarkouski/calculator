@@ -14,8 +14,8 @@ import (
 func main() {
 	cfg := config.LoadConfig()
 
-	// Initialize repository
-	repository := repo.NewRepository()
+	log.Printf("PACKAGES DEFAULT:%v", cfg.PackagesDefault)
+	repository := repo.NewRepository(cfg.PackagesDefault)
 
 	// Initialize application layer
 	application := app.NewApp(repository)

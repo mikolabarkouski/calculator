@@ -1,10 +1,37 @@
 package repo
 
-import "log"
+import (
+	"fmt"
+	"sort"
+)
 
-type Repository struct{}
+type Repository struct {
+	packages map[string]int
+}
 
-func NewRepository() *Repository {
-	log.Println("Initializing repository")
-	return &Repository{}
+func NewRepository(packages []int) *Repository {
+	sort.Ints(packages)
+
+	packageMap := make(map[string]int)
+	for i, pkg := range packages {
+		packageMap[fmt.Sprint(i+1)] = pkg
+	}
+	return &Repository{packages: packageMap}
+}
+func (r *Repository) AddPackage(packageSize int) {
+	key := fmt.Sprint(len(r.packages) + 1)
+	r.packages[key] = packageSize
+}
+
+func (r *Repository) GetPackages() []int {
+	values := make([]int, 0, len(r.packages))
+	for _, v := range r.packages {
+		values = append(values, v)
+	}
+	sort.Ints(values)
+	return values
+}
+
+func (r *Repository) DeletePackageById(id string) {
+	delete(r.packages, id)
 }
