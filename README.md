@@ -43,7 +43,7 @@ This will generate and open a UI report in the browser.
 ---
 
 ## 4. UI  
-- Swagger Button: Opens Swagger API documentation.  
+- **Swagger Button**: Opens Swagger API documentation.  
 - **Add Package Sizes**: Use the **X** button to remove a package size and the **✔️** button to submit.  
 - **Order Input**: Enter the desired order size in the input field.  
 - **Calculate Button**: Click to compute the optimized package distribution.  
