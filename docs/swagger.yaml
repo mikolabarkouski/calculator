@@ -51,4 +51,76 @@ paths:
       summary: Calculate package sizes needed
       tags:
       - Orders
+  /package:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a package by its ID
+      parameters:
+      - description: ID of the package to delete
+        in: body
+        name: id
+        required: true
+        schema:
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Package deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request format
+          schema:
+            type: string
+      summary: Delete a package
+      tags:
+      - Packages
+    post:
+      consumes:
+      - application/json
+      description: Adds a new package size to the system
+      parameters:
+      - description: Package size to add
+        in: body
+        name: packageSize
+        required: true
+        schema:
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Package added successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request format
+          schema:
+            type: string
+      summary: Add a new package size
+      tags:
+      - Packages
+  /packages:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a list of all available package sizes
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of package sizes
+          schema:
+            additionalProperties:
+              type: integer
+            type: object
+        "500":
+          description: Failed to encode response
+          schema:
+            type: string
+      summary: Get all package sizes
+      tags:
+      - Packages
 swagger: "2.0"

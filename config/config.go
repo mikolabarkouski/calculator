@@ -6,6 +6,7 @@ import (
 	"github.com/caarlos0/env/v6"
 )
 
+// add elem to config and matching env var
 type Config struct {
 	Port            string `env:"PORT" envDefault:"8080"`
 	LogLevel        string `env:"LOG_LEVEL" envDefault:"info"`

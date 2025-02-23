@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi"
+	_ "github.com/mikolabarkouski/calculator/docs"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 func (h *Handler) Router() http.Handler {
@@ -19,5 +21,9 @@ func (h *Handler) Router() http.Handler {
 
 	//UI
 	r.Get("/app", h.RenderApp)
+
+	//Swagger-UI
+	r.Get("/swagger/*", httpSwagger.WrapHandler)
+
 	return r
 }

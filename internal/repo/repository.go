@@ -10,6 +10,7 @@ type Repository struct {
 }
 
 func NewRepository(packages []int) *Repository {
+	//sort on init-step for performance purporse
 	sort.Ints(packages)
 
 	packageMap := make(map[string]int)
@@ -31,6 +32,7 @@ func (r *Repository) GetPackages() []int {
 	sort.Ints(values)
 	return values
 }
+
 func (r *Repository) GetPackagesMap() map[string]int {
 
 	return r.packages

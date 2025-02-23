@@ -63,7 +63,7 @@
     </style>
 </head>
 <body>
-
+    <button class="swagger-btn" onclick="openSwagger()">Swagger</button>
     <!-- Блок 1: Packages -->
     <div class="container packages">
         <h3>Packages</h3>
@@ -189,6 +189,84 @@
 
 
     </script>
+<div id="swagger-modal">
+    <div class="swagger-content">
+        <button class="close-btn" onclick="closeSwagger()">✖</button>
+        <iframe id="swagger-frame"></iframe>
+    </div>
+</div>
 
+<style>
+    /* Кнопка Swagger */
+    .swagger-btn {
+        background-color: #2ecc71;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .swagger-btn:hover {
+        background-color: #27ae60;
+    }
+
+    /* Всплывающее окно */
+    #swagger-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .swagger-content {
+        position: relative;
+        width: 80%;
+        height: 80%;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: red;
+        color: white;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 5px 10px;
+        border-radius: 50%;
+    }
+
+    #swagger-frame {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+</style>
+
+<script>
+    function openSwagger() {
+        document.getElementById("swagger-modal").style.display = "flex";
+        document.getElementById("swagger-frame").src = window.location.origin + "/swagger/";
+    }
+
+    function closeSwagger() {
+        document.getElementById("swagger-modal").style.display = "none";
+    }
+</script>
 </body>
 </html>

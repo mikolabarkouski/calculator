@@ -19,4 +19,4 @@ docker-up:
 	docker run -p $(PORT):8080 --name $(CONTAINER_NAME) $(IMAGE_NAME)
 
 generate-doc:
-	swag init -g cmd/server/main.go
+	swag init -d internal/api -g calculator_api.go -g package.go -g server_side_rendering.go

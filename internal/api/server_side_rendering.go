@@ -14,7 +14,7 @@ import (
 // @Produce html
 // @Success 200 {string} string "HTML page rendered successfully"
 // @Failure 500 {string} string "Failed to render template"
-// @Router / [get]
+// @Router /app [get]
 func (h *Handler) RenderApp(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.New("index").Parse(templates.IndexHTML))
 	packagesDefault := h.app.GetPackagesMap()
