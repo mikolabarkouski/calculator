@@ -1,0 +1,84 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "description": "Serves the HTML UI with available package sizes",
+                "consumes": [
+                    "text/html"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "tags": [
+                    "UI"
+                ],
+                "summary": "Render the application UI",
+                "responses": {
+                    "200": {
+                        "description": "HTML page rendered successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to render template",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/calculate": {
+            "post": {
+                "description": "Calculates the number of packages required for an order size",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Calculate package sizes needed",
+                "parameters": [
+                    {
+                        "description": "Order size",
+                        "name": "orderSize",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Calculated package details",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request format",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

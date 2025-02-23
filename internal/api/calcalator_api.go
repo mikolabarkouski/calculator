@@ -6,6 +6,16 @@ import (
 	"net/http"
 )
 
+// @Summary Calculate package sizes needed
+// @Description Calculates the number of packages required for an order size
+// @Tags Orders
+// @Accept json
+// @Produce json
+// @Param orderSize body int true "Order size"
+// @Success 200 {object} map[string]interface{} "Calculated package details"
+// @Failure 400 {string} string "Invalid request format"
+// @Failure 500 {string} string "Internal server error"
+// @Router /calculate [post]
 func (h *Handler) calculate(w http.ResponseWriter, r *http.Request) {
 	var orderSizeRequest int
 	body, err := io.ReadAll(r.Body)

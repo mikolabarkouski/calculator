@@ -1,0 +1,54 @@
+info:
+  contact: {}
+paths:
+  /:
+    get:
+      consumes:
+      - text/html
+      description: Serves the HTML UI with available package sizes
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: HTML page rendered successfully
+          schema:
+            type: string
+        "500":
+          description: Failed to render template
+          schema:
+            type: string
+      summary: Render the application UI
+      tags:
+      - UI
+  /calculate:
+    post:
+      consumes:
+      - application/json
+      description: Calculates the number of packages required for an order size
+      parameters:
+      - description: Order size
+        in: body
+        name: orderSize
+        required: true
+        schema:
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Calculated package details
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request format
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Calculate package sizes needed
+      tags:
+      - Orders
+swagger: "2.0"
