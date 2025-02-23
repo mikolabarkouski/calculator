@@ -43,7 +43,7 @@ This will generate and open a UI report in the browser.
 ---
 
 ## 4. UI  
-- <button style="background-color: #2ecc71; color: white; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 5px;">Swagger</button>Button: Opens Swagger API documentation.  
+- :green_button: Swagger Button: Opens Swagger API documentation.  
 - **Add Package Sizes**: Use the **X** button to remove a package size and the **✔️** button to submit.  
 - **Order Input**: Enter the desired order size in the input field.  
 - **Calculate Button**: Click to compute the optimized package distribution.  
