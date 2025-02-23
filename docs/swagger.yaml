@@ -1,7 +1,7 @@
 info:
   contact: {}
 paths:
-  /:
+  /app:
     get:
       consumes:
       - text/html

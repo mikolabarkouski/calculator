@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/": {
+        "/app": {
             "get": {
                 "description": "Serves the HTML UI with available package sizes",
                 "consumes": [
