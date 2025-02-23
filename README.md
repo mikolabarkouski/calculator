@@ -58,8 +58,4 @@ http://localhost:8080/swagger/index.html
 Alternatively, use the **Swagger Button** in the UI to open the API docs.
 
 ## 6. Deployed service
-THere is packager deployed publicly here:
-
-```
-https://packager-0e6j.onrender.com/app
-```
+THere is packager deployed publicly here:[Packager Service](https://packager-0e6j.onrender.com/app)
